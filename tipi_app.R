@@ -1,5 +1,3 @@
-# setwd("/Users/jiahoong/Library/CloudStorage/OneDrive-NottinghamTrentUniversity/_Teach/IDCI_PSYC40725/2023_2024/lectures/TIPI_shiny")
-
 library(shiny)
 library(shinyjs)
 
@@ -145,12 +143,8 @@ server <- function(input, output, session) {
   tipi <- reactiveValues(data = NULL)
   tipi$dim <- c("Openness", "Conscientiousness", "Extraversion", "Agreeableness", "Neuroticism")
   
-  #df_out <- reactiveVal(df)
-  
   
   observeEvent(input$go, {
-    
-    #tipi <- df_out()
     
     item01 <- as.integer(input$item01)
     item02 <- as.integer(input$item02)
@@ -170,9 +164,7 @@ server <- function(input, output, session) {
     neur <- sum(item04, item09, na.rm=TRUE)
   
     tipi$score <- c(open, cons,extr, agre, neur)
-    #df_out(tipi) # write data?
-    #tipi$sum <- c(open, cons,extr, agre, neur)
-    #tipi$dim <- c("Openness", "Conscientiousness", "Extraversion", "Agreeableness", "Neuroticism")
+
   })
   
   
@@ -192,21 +184,13 @@ server <- function(input, output, session) {
   })  
   
   output$plot <- renderPlot({
-    #if (is.null(df_out$score)) return()
     if (is.null(tipi$score)) return()
     plot(tipi$score, xaxt = "n", xlab='Factor', ylab='Score', type = "h", 
          col = "gray", lwd = 20)
     axis(1, at=1:5, labels=c("Open", "Consci.", "Extrav", "Agree", "Neuro"))
-    #plot(df_out)
+
   })
   
-#  output$text <- renderText({ 
-#    print(open$data)
-#  })
-}
 
 # Run the app ----
 shinyApp(ui = ui, server = server)
-
-
-# runApp("App-1", display.mode = "showcase") # to show the app and the code together
